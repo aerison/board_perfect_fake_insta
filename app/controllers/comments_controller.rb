@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
     if @comment.save
     respond_to do |format|
       format.html{redirect_to :back}
-      format.js{render 'create_temp'}
+      format.js{render 'create_temp'} #추가코드
     end
   else
     redirect_to :back
