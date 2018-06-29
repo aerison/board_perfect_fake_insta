@@ -1,0 +1,99 @@
+<h1>글 봐!!</h1>
+<%= @post.id %>번째 글
+<%= @post.title %>
+<%= @post.content %>
+<% if can? :edit, @post %>
+  <%= link_to '수정하기', edit_post_path(@post) %>
+<% end %>
+<% if can? :destroy, @post %>
+  <%= link_to '삭제하기',
+                      @post,
+                      method: :delete,
+                      data: {confirm: 'are you sure wanna delete?'} %>
+<% end %>
+<hr />
+
+<form action="/posts/<%= @post.id%>/comments" method="post">
+  <input type="text" name="content" /><br />
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <input type="submit" />
+</form>
+<hr />
+<div id="comments">
+    <% @comments.each do |comment| %>
+    <p>
+      <%= comment.content %>
+      <%= link_to 'delete!!!!!',destoy_comment_path(comment.id), class:"delete_comment"%>
+    </p>
+    <hr />
+  <% end %>
+</div>
+
+<!--
+
+-->
+<script>
+  $('input[type="submit"]').on('click',function(e){
+    e.preventDefault();
+    alert('start!!');
+    $.ajax({url: $('form').attr('action'),
+            type: "POST",
+            data:{content: $('input[name="content"]').val(),
+                  authenticity_token:$('[name="csrf-token"]').attr('content') } ,
+            dataType:'script',
+            success: function(){
+              alert("success!")
+              $('input[name="content"]').val('');
+            },
+            error: function(){
+              alert("fail!")
+            }
+          });
+  });
+
+$('.delete_comment').on('click',function(e){
+  e.preventDefault();
+  alert("startdelete")
+  $.ajax({
+    url: this.href , //<a></a>
+    type: "DELETE",
+    data: {authenticity_token:$('[name="csrf-token"]').attr('content')},
+    dataType: "script",
+    success: function(){
+      alert("delete_complete")
+    } ,
+    error: function(){
+      alert("delete_error")
+    }
+  })
+})
+
+</script>
+
+
+<!-- 댓글작성삭제기능
+<script>
+$('input[type="submit"]').on('click',function(e){  //e=event
+  var response=confirm("you wanna submit?");
+  if(!response){
+    //코드가 실행되려면 response==false
+    //e.preventDefault(); //default를 막아주는 코드-submit 되는 것을 막아준다.
+    return false; //preventDefault와 같음
+  }else{
+    //e.stopimmediatePropagation() 동일한 엘리멘트에 있는 다른 이벤트발생 x
+  }
+});
+
+function checkContentLen(e){
+  var content = $('input[name="content"]').val();
+  if(content.length<10){
+    alert("write down more than 10 lit");
+    return false;
+  }else{
+    alert("excellent!!");
+  }
+};
+$('input[type="submit"]').on("click",checkContentLen);
+
+
+</script> -->
