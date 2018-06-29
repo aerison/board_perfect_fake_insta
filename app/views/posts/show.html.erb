@@ -30,6 +30,14 @@
   <% end %>
 </div>
 
+<script>
+  $('form').on('ajax:success',function(){
+    $('input[name="content"]').val('');
+  });  
+</script>
+
+
+<!-- https://guides.rorlab.org/working_with_javascript_in_rails.html -->
 <!--원래 스크립트코드
 <script>
   $('input[type="submit"]').on('click',function(e){
