@@ -1,0 +1,6 @@
+var parent=$('a[href="/comments/<%=params[:comment_id]%>"]').parent()
+//p태그가 현재 들어있는 상황.
+var hr=parent.next()
+//hr태그도 지울거
+parent.remove();
+hr.remove();

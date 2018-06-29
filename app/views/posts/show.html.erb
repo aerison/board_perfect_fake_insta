@@ -13,7 +13,7 @@
 <% end %>
 <hr />
 
-<form action="/posts/<%= @post.id%>/comments" method="post">
+<form action="/posts/<%= @post.id%>/comments" method="post" data-remote=true> <!--data-remote=true추가됨,아래주석처리한 코드 대신-->
   <input type="text" name="content" /><br />
   <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
   <input type="submit" />
@@ -23,15 +23,14 @@
     <% @comments.each do |comment| %>
     <p>
       <%= comment.content %>
-      <%= link_to 'delete!!!!!',destoy_comment_path(comment.id), class:"delete_comment"%>
+      <%= link_to 'delete!!!!!',destoy_comment_path(comment.id), remote:true, method: :delete, class:"delete_comment"%>
+      <!--추가코드 remote:true, method: :delete, -->
     </p>
     <hr />
   <% end %>
 </div>
 
-<!--
-
--->
+<!--원래 스크립트코드
 <script>
   $('input[type="submit"]').on('click',function(e){
     e.preventDefault();
@@ -68,7 +67,7 @@ $('.delete_comment').on('click',function(e){
   })
 })
 
-</script>
+</script> -->
 
 
 <!-- 댓글작성삭제기능

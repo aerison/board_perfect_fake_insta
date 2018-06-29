@@ -21,7 +21,7 @@ end
   #   redirect_to :back
   # end
   def destroy
-  @comment = Comment.find(params[:comment_id])
+  @comment = Comment.find(params[:comment_id]) #comment_id
   @comment.destroy
   respond_to do |format|
     format.html {redirect_to :back}
